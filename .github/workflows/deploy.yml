@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # 使用 GitHub 托管的运行器
 
     steps:
       - name: Checkout code
@@ -30,5 +30,11 @@ jobs:
         env:
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}  # 部署密钥，需要在 GitHub secrets 中配置
         run: |
+          # 配置 SSH 代理并添加私钥
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan your-server.com >> ~/.ssh/known_hosts
+
           # 假设你有一个脚本 deploy.sh 来处理部署
           ./deploy.sh
