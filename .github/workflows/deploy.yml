@@ -3,7 +3,7 @@ name: Deploy Go-Ethereum
 on:
   push:
     branches:
-      - main  # 触发工作流的分支
+      - master  # 确认分支名称为 master
 
 jobs:
   build:
